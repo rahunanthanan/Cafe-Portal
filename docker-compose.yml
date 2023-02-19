@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  client:
+    container_name: client
+    restart: always
+    build:
+      context: ./client
+    ports:
+      - "${CLIENT_PORT:-3000}:3000"
+    volumes:
+      - "./client:/app"
+  server:
+    container_name: server
+    restart: always
+    build:
+      context: ./server
+    ports:
+      - "${SERVER_PORT:-4000}:4000"
+    volumes:
+      - "./server:/app"
+    environment: 
+      DB_USERNAME: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+      DB_HOST: "${DB_HOST:-mongodb}"
+      DB_PORT: "${MONGODB_PORT:-27017}"
+      DB_DATABASE: "${DB_DATABASE:-mongodb}"
+    networks:
+      - cafechain
+  mongodb:
+    container_name: mongodb
+    image: "mongo:latest"
+    restart: always
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - "database:/data/db"
+    environment:
+      MONGO_INITDB_DATABASE: "${DB_DATABASE}"
+      MONGO_INITDB_ROOT_USERNAME: "${DB_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${DB_PASSWORD}"
+    networks:
+      - cafechain
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      retries: 3
+      timeout: 5s
+
+volumes:
+  database:
+    driver: local
+
+networks:
+  cafechain:
+    driver: bridge
