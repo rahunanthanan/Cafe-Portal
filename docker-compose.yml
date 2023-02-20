@@ -27,6 +27,8 @@ services:
       DB_DATABASE: "${DB_DATABASE:-mongodb}"
     networks:
       - cafechain
+    depends_on:
+      - mongodb
   mongodb:
     container_name: mongodb
     image: "mongo:latest"
