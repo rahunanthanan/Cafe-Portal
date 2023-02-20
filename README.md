@@ -21,7 +21,7 @@ yarn dev
 ```
 
 ## List all Cafes
-![alt text](hhttps://github.com/rahunanthanan/Cafe-Portal/blob/main/client/Screenshots/Cafe%20Page.png)
+![alt text](https://github.com/rahunanthanan/Cafe-Portal/blob/main/client/Screenshots/CafePage.png)
 
 ## List all Employees
 ![alt text](https://github.com/rahunanthanan/Cafe-Portal/blob/main/client/Screenshots/EmployeesPage.png)
