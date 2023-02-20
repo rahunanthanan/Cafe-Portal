@@ -1,4 +1,4 @@
-## MintableLite
+## CafePortal
 Cafe Portal is a web application where it has 2 pages. Cafes and Employees. Every Cafe has name, description, location attributes.  The app have two pages, a landing page for listing already created Cafes and Employees fetched from endpoints and a details page for viewing full details of an employee which comes from another API endpoint.
 
 
