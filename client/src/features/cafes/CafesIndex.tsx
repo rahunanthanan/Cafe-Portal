@@ -19,9 +19,21 @@ const columns: ColumnsType<Cafe> = [
     key: "name",
   },
   {
-    title: "Description",
-    dataIndex: "description",
-    key: "description",
+    title: "Location",
+    dataIndex: "location",
+    key: "location",
+  },
+  {
+    title: "Employees",
+    key: "employees",
+    dataIndex: "",
+    render: (item) => item.employees.length,
+  },
+  {
+    dataIndex: "",
+    key: "action",
+    title: "Action",
+    render: (item) => <Link to={`/cafes/${item._id}/edit`}>Edit</Link>,
   },
 ];
 

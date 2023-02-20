@@ -1,17 +1,25 @@
 // Importing important packages
 const { Router } = require("express");
+const { Schema } = require("mongoose");
 const { body, validationResult } = require("express-validator");
 
 // Using express and routes
 const employeeRouter = Router();
 
 // Cafe module which is required and imported
-const Cafe = require("./models/Cafe");
-const Employee = require("./models/Employee");
+const { Cafe } = require("./models/Cafe");
+const { Employee } = require("./models/Employee");
 
 // To Get List Of Employee
 employeeRouter.route("/").get(function (req, res) {
-  Employee.find(function (err, employee) {
+  const findBy = {};
+  
+  const cafeId = req.query.cafe;
+  if (cafeId) {
+    findBy.cafe = cafeId;
+  }
+
+  Employee.find(findBy, function (err, employee) {
     if (err) {
       console.log(err);
       res.status(400).json({ message: err.message });
@@ -63,7 +71,22 @@ employeeRouter.route("/").post(
                 message: err.message,
               });
             } else {
-              res.status(201).json(employee);
+              Cafe.findByIdAndUpdate(
+                cafe._id,
+                {
+                  $push: { employees: employee },
+                },
+                function (err, employee) {
+                  if (err) {
+                    console.log(err);
+                    res.status(400).json({
+                      message: err.message,
+                    });
+                  } else {
+                    res.status(201).json(employee);
+                  }
+                }
+              );
             }
           }
         );

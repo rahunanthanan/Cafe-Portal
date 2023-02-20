@@ -1,8 +1,10 @@
 const { model, Schema } = require("mongoose");
+const { EmployeeSchema } = require("./Employee");
 
 // List of columns for Cafe schema
 const Cafe = new Schema(
   {
+    employees: [EmployeeSchema],
     name: {
       type: String,
       required: true,
@@ -19,16 +21,13 @@ const Cafe = new Schema(
     location: {
       type: String,
     },
-    employees: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Employee",
-      },
-    ],
   },
   {
     collection: "cafes",
   }
 );
 
-module.exports = model("Cafe", Cafe);
+
+module.exports.CafeSchema = Cafe;
+
+module.exports.Cafe = model("Cafe", Cafe);

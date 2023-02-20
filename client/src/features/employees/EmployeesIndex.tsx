@@ -33,6 +33,12 @@ const columns: ColumnsType<Employee> = [
     dataIndex: "gender",
     key: "gender",
   },
+  {
+    dataIndex: "",
+    key: "action",
+    title: "Action",
+    render: (item) => <Link to={`/employees/${item._id}/edit`}>Edit</Link>,
+  },
 ];
 
 export const EmployeesIndex = () => {

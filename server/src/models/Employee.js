@@ -45,4 +45,6 @@ const Employee = new Schema(
   }
 );
 
-module.exports = model("Employee", Employee);
+module.exports.EmployeeSchema = Employee;
+
+module.exports.Employee = model("Employee", Employee);
