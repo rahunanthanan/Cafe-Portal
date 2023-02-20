@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useRoutes } from "react-router-dom";
 
-import { useAppSelector, useAppDispatch } from 'app/hooks';
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-  incrementAsync,
-  incrementIfOdd,
-  selectCount,
-} from './cafesSlice';
+import { CafesIndex } from "./CafesIndex";
 
-export function Cafes() {
-  const count = useAppSelector(selectCount);
-  const dispatch = useAppDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+export const Cafes = () => {
+  const router = useRoutes([
+    {
+      path: "",
+      index: true,
+      element: <CafesIndex />,
+    },
+  ]);
 
-  const incrementValue = Number(incrementAmount) || 0;
-
-  return (
-    <div>
-      Cafes
-    </div>
-  );
-}
+  return router;
+};

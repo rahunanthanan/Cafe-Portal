@@ -3,5 +3,5 @@ import { cafesSaga } from "features/cafes/cafesSaga";
 import { employeesSaga } from "features/employees/employeesSaga";
 
 export function* rootSaga() {
-  yield all([cafesSaga, employeesSaga]);
+  yield all([cafesSaga(), employeesSaga()]);
 }

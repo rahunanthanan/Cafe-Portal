@@ -1,8 +1,8 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
-import { Home } from './features/home/Home';
-import { Cafes } from './features/cafes/Cafes';
-import { Employees } from './features/employees/Employees';
+import { Home } from "./features/home/Home";
+import { Cafes } from "./features/cafes/Cafes";
+import { Employees } from "./features/employees/Employees";
 
 export const router = createBrowserRouter([
   {
@@ -11,11 +11,11 @@ export const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/cafes",
+    path: "/cafes/*",
     element: <Cafes />,
   },
   {
-    path: "/employees",
+    path: "/employees/*",
     element: <Employees />,
   },
-])
+]);

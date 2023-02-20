@@ -1,11 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
+const cors = require("cors");
 
 const cafeRouter = require("./cafeRouter");
 const employeeRouter = require('./employeeRouter');
 
 const app = express();
 mongoose.Promise = global.Promise;
+
+// Enabled CORS
+app.use(cors());
+
+app.options('*', cors()) // include before other routes
 
 app.use(express.json());
 
