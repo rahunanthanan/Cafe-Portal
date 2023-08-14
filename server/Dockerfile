@@ -5,7 +5,7 @@ WORKDIR /app
 COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 
-RUN npm install
+RUN yarn install
 
 FROM node:18-alpine as runner
 

@@ -7,7 +7,9 @@ COPY ./package-lock.json ./package-lock.json
 
 RUN npm install
 
-RUN npm build
+COPY . .
+
+RUN npm run build
 
 FROM nginx:1.23.3-alpine as runner
 
