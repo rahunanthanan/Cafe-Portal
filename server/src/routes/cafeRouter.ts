@@ -10,6 +10,7 @@ const controller = appContainer.get<ICafeController>(TYPES.CafeController);
 
 cafeRouter.get('/', [auth], controller.list);
 cafeRouter.post('/', [auth], controller.create);
+cafeRouter.get('/:cafeId', [auth], controller.show);
 cafeRouter.put('/:cafeId', [auth], controller.update);
 cafeRouter.delete('/:cafeId', [auth], controller.remove);
 

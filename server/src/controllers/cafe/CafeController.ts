@@ -11,10 +11,33 @@ import { updateSchema } from './utils/updateSchema';
 
 @injectable()
 export class CafeController extends BaseController implements ICafeController {
-  @inject(TYPES.CafeService) private _cafe: ICafeService;
+  @inject(TYPES.CafeService) private _cafe?: ICafeService;
 
   public async list(req: Request, res: Response<ICafe[]>) {
-    return this.ok(res, []);
+    let params: Partial<ICafe> = {};
+    if (req.query.location) {
+      params.location = req.query.location as string;
+    }
+
+    let cafes;
+    try {
+      cafes = await this._cafe?.list(params);
+    } catch (error) {
+      return this.failed<ICafe>(res, error);
+    }
+
+    return this.ok<ICafe[]>(res, cafes);
+  }
+
+  public async show(req: Request, res: Response<ICafe>) {
+    let cafe;
+    try {
+      cafe = await this._cafe?.findOrFailById(req.params.cafeId);
+    } catch (error) {
+      return this.failed<ICafe>(res, error);
+    }
+
+    return this.ok<ICafe>(res, cafe);
   }
 
   public async create(req: Request, res: Response) {
@@ -25,7 +48,14 @@ export class CafeController extends BaseController implements ICafeController {
       return this.validationFailed(res, error);
     }
 
-    return this.created(res, values);
+    let cafe;
+    try {
+      cafe = await this._cafe?.create(values);
+    } catch (error: any) {
+      return this.failed(res, error);
+    }
+
+    return this.created(res, cafe);
   }
 
   public async update(req: Request, res: Response) {
@@ -35,10 +65,11 @@ export class CafeController extends BaseController implements ICafeController {
     } catch (error: any) {
       return this.validationFailed(res, error);
     }
-    return this.ok(res, values);
+
+    return this.ok(res, await this._cafe?.update(req.params.cafeId, values));
   }
 
   public async remove(req: Request, res: Response) {
-    return this.ok(res);
+    return this.ok(res, await this._cafe?.remove(req.params.cafeId));
   }
 }
